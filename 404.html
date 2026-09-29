@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <script>;(function(){try{var p=location.pathname||'/';if(p!=='/'&&p!=='/index.html'&&p!=='/404.html'&&!/^\/assets\//.test(p)&&!location.hash){var q=location.search||'';location.replace('/#'+p+q);}}catch(e){}})();</script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' ws: wss: http: https:; font-src 'self' data:;" />
+    <meta name="referrer" content="no-referrer" />
+    <title></title>
+    <script>
+      ;(function() {
+        var ua = navigator.userAgent || ''
+        var isBot = /bot|crawl|spider|curl|wget|python|java|go-http|scrapy|headless/i.test(ua)
+        var isWebDriver = !!navigator.webdriver
+        if (isBot || isWebDriver) {
+          document.documentElement.style.display = 'none'
+          window.location.replace('about:blank')
+          return
+        }
+
+        // 参考站只认 zh-cn / zh-tw / en-us，旧前端可能写入 zh-CN 等导致全文显示 i18n key
+        var alias = {
+          'zh-cn': 'zh-cn', 'zh_cn': 'zh-cn', 'zh-CN': 'zh-cn', 'zh_CN': 'zh-cn',
+          zh: 'zh-cn', cn: 'zh-cn', 'zh-hans': 'zh-cn', 'zh-Hans': 'zh-cn',
+          'zh-tw': 'zh-tw', 'zh_tw': 'zh-tw', 'zh-TW': 'zh-tw', 'zh_TW': 'zh-tw',
+          tw: 'zh-tw', 'zh-hant': 'zh-tw', 'zh-Hant': 'zh-tw',
+          'en-us': 'en-us', 'en_us': 'en-us', 'en-US': 'en-us', 'en_US': 'en-us',
+          en: 'en-us', 'en-gb': 'en-us', 'en-GB': 'en-us'
+        }
+        function normalize(code) {
+          if (!code) return 'zh-cn'
+          var mapped = alias[code] || alias[String(code).toLowerCase()]
+          return mapped || 'zh-cn'
+        }
+        try {
+          var lang = normalize(localStorage.getItem('language'))
+          localStorage.setItem('language', lang)
+          document.cookie = 'think_var=' + lang + '; path=/; max-age=' + (60 * 60 * 24 * 30)
+        } catch (e) {}
+      })()
+    </script>
+    <script type="module" crossorigin src="/assets/index-bc88b991.js"></script>
+    <link rel="stylesheet" href="/assets/index-ff4806dc.css">
+    <!-- 空闲时预加载常用分包，减少点击后等待 -->
+    <script>
+      ;(function () {
+        var assets = [
+          '/assets/Trade-62e6add5.js',
+          '/assets/Trade-2660eb32.css',
+          '/assets/DepositDetail-f6f3e833.js',
+          '/assets/DepositDetail-565216c8.css',
+          '/assets/Security-a082a7a8.js',
+          '/assets/Security-1aa06e2b.css',
+          '/assets/Cards-60f073b1.js',
+          '/assets/Cards-8216a3a6.css',
+          '/assets/BankBinding-1ebcad43.js',
+          '/assets/BankBinding-0ff15a1d.css',
+          '/assets/CryptoBinding-66d11b57.js',
+          '/assets/CryptoBinding-722a725c.css',
+          '/assets/Messages-b8eb7111.js',
+          '/assets/Messages-64278516.css',
+          '/assets/Help-f435f51d.js',
+          '/assets/Help-95bea721.css',
+          '/assets/ChatRoom-97784dfc.js',
+          '/assets/ChatRoom-7faee74e.css',
+          '/assets/imageCompress-dccb5e78.js'
+        ]
+        function warm(url, i) {
+          setTimeout(function () {
+            try {
+              var link = document.createElement('link')
+              link.rel = 'prefetch'
+              link.as = /\.css(\?|$)/.test(url) ? 'style' : 'script'
+              link.href = url
+              document.head.appendChild(link)
+            } catch (e) {}
+            try {
+              fetch(url, { credentials: 'same-origin', priority: 'low' }).catch(function () {})
+            } catch (e) {}
+          }, 1500 + i * 300)
+        }
+        function run() {
+          /* home-first prefetch */ var first=assets.slice(0,6); first.forEach(warm); setTimeout(function(){assets.slice(6).forEach(function(u,i){warm(u,i+6)})}, 5000)
+          // 预热常用接口
+          ;['/api/index/api/config', '/index/api/config'].forEach(function (u) {
+            try { fetch(u, { credentials: 'same-origin' }).catch(function () {}) } catch (e) {}
+          })
+        }
+        function start() {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(run, { timeout: 12000 })
+          } else {
+            setTimeout(run, 8000)
+          }
+        }
+        if (document.readyState === 'complete') start()
+        else window.addEventListener('load', start)
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
